@@ -1,0 +1,16 @@
+Tener en la pagina de busqueda el post con mas likes
+Otro que aparezca random - que no sea el mismo
+
+cuando busques un post y lo encuentres aparzeca en ela medio de la pagina con una
+transicion que empuje a lo demas hacia abajo
+
+añadir un logo con position y que este arriab a la izquierda en la pagina de search que te trauga de nuevo a la pagina de inicio
+
+Que se puedan borrar posts
+
+<!-- <% if (posts.length > 0) { %> -->
+                <!-- <% const indexWithMoreLikes = 0; %> -->
+                <!-- // <% posts.forEach(function(post) { %>
+                  // if number of likes is bigger - change the indexWithMoreLikes
+                // <% }); %>
+              // <% } %> -->

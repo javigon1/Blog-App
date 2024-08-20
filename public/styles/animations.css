@@ -1,0 +1,11 @@
+.item:hover {
+    background-color: rgb(233, 233, 234);
+    transition: transform 0.3s ease, background-color 0.3s ease, filter 0.3s ease;
+}
+
+.btn-grey:hover {
+    color: #000; /* Ensure text color remains black */
+    background-color: #a9a9a9; /* Change to a different background color on hover */
+    border-color: #a9a9a9; /* Match border color to background color on hover */
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}

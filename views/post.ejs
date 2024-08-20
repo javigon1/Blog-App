@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/animations.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+    html, body {
+      background-color: #f8f9fa;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .box {
+      width: 700px;
+      height: 600px;
+      margin: 10px;
+      padding: 5rem;
+      border-radius: 12%;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .visibility {
+      padding-left: 1rem;
+      padding-bottom: 0.2rem;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      border-style: solid;
+      border: 1px solid rgba(119, 118, 118, 0.5);
+    }
+
+    .btn-grey {
+      color: #000;
+      background-color: #bbbcbe; 
+      border: 1px solid #bbbcbe; 
+      border-radius: 0.25rem; 
+      padding: 0.375rem 0.75rem; 
+      font-size: 1rem; 
+      font-weight: 400;
+      text-align: center; 
+      text-decoration: none;
+      display: inline-block;
+      line-height: 1.5; 
+      cursor: pointer;
+    }
+
+    .btn-grey:hover {
+    color: #000; 
+    background-color: #a9a9a9;
+    border-color: #a9a9a9; 
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container col-md-7 col-lg-8">
+      <div class="box">
+        <h4 class="mb-4" style="display: flex; justify-content: center; font-size: 2.5rem;">Create a Post</h4>
+        <form action="/view-posts" method="POST" class="my-3">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="firstName" class="form-label">Title</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="" required>
+            </div>
+        
+            <div class="col-12">
+              <label for="lastName" class="form-label">Description</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+            </div>
+        
+            <div class="visibility">
+              <h5 class="mt-4">Visibility</h5>
+        
+              <div class="my-3">
+                <div class="form-check">
+                  <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="Public" checked required>
+                  <label class="form-check-label" for="credit">Public</label>
+                </div>
+                <div class="form-check">
+                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" value="Private" required>
+                  <label class="form-check-label" for="debit">Private</label>
+                </div>
+              </div>
+            </div>
+        
+            <button class="btn-post btn btn-grey w-100 py-2 btn-lg" type="submit">Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</body>
+</html>

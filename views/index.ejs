@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/styles/animations.css">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
-<body>
+<body>x
     <%- include('partials/left-sidebar.ejs') %>
 
     <h1 class="title top">Home</h1>
@@ -21,7 +21,7 @@
                     <% if (post.visibility === "Public") { %>
                     <div class="post">
                         <h2><%= post.title %></h2>
-                        <p><%= post.description %></p>
+                        <p><%= post.content %></p>
                     </div>
                     <% } %>
                 <% }); %>

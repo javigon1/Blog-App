@@ -1,33 +1,22 @@
 import express from "express";
-import session from "express-session";
 import bodyParser from "body-parser";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { v4 as uuidv4 } from 'uuid';
-
-// Determine the directory name for file path resolution
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import axios from "axios";
+import session from "express-session";
 
 const app = express();
 const port = 3000;
-let posts = [];
+const API_URL = "http://localhost:4000";
 
-// Configure session
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(session({
     secret: '12df243e', 
     resave: false,
     saveUninitialized: true
 }));
 
-// Set EJS as the view engine
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
-// Serve static files from the "public" directory
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Middleware for checking username and password
 function passwordCheck(req, res, next) {
     if (req.body["username"] === "testUser01" && req.body["password"] === "testPassword.01") {
         req.session.authorized = true;
@@ -36,96 +25,105 @@ function passwordCheck(req, res, next) {
     next();
 }
 
-// Route for rendering login page
-app.get('/', (req, res) => {
-    res.render('login', { error: null });
-});
-
-// Route for handling form submission
-app.post('/home', passwordCheck, (req, res) => {
-    if (req.session.authorized) {
-        res.redirect('/index');
-    } else {
-        res.render('login', { error: 'Invalid username or password' });
+// route to render the initial login form
+app.get("/", async (req, res) => {
+    try {
+        const response = await axios.get(API_URL + "/login");
+        res.render("login.ejs", { error: null });
+    } catch (error) {
+        res.status(500).json({ message: "Error loading login form" });
     }
 });
 
-app.get("/index", (req, res) => {
+// Check if the password given is valid, if so render the home page
+app.post("/home", passwordCheck, async (req, res) => {
     if (req.session.authorized) {
-        res.render('index', { username: req.session.username, posts });
+        try {
+            const response = await axios.get(API_URL + "/home");
+            res.render("index.ejs", { username: req.session.username, posts: response.data });
+        } catch (error) {
+            res.status(500).json({ message: "Error loading home page" });
+        }
     } else {
-        res.redirect('/');
+        res.render('login.ejs', { error: 'Invalid username or password' });
     }
 });
 
+// render the home page when the home page button on the left sidebar is clicked
+app.get("/home", async (req, res) => {
+    try {
+        const response = await axios.get(API_URL + "/home");
+        console.log((response.data)[0].title);
+        res.render("index.ejs", { username: req.session.username, posts: response.data });
+    } catch (error) {
+        res.status(500).json({ message: "Error loading home page" });
+    }
+});
+
+// allow to user to render the post creation form
 app.get("/create-post", (req, res) => {
-    if (req.session.authorized) {
-        res.render("post");
-    } else {
-        res.redirect('/'); 
+    res.render("post.ejs"); 
+});
+
+// allow user to post the latter created
+app.post("/post", async (req, res) => {
+    try {
+        await axios.post(API_URL + "/post", req.body);
+        res.redirect("/home");
+    } catch (error) {
+        res.status(500).json({ message: "Error creating post" });
     }
 });
 
-app.get("/profile", (req, res) => {
-    res.render("profile", { username: req.session.username, posts });
+// route to access the user's profile
+app.get("/profile", async (req, res) => {
+    try {
+        const response = await axios.get(API_URL + "/profile");
+        res.render("profile.ejs", { username: req.session.username, posts: response.data })
+    } catch (error) {
+        res.status(500).json({ message: "Error loading user's profile" });
+    }
 });
 
-app.get("/home", (req, res) => {
-    res.render("index", { username: req.session.username, posts });
-});
+app.get("/search", async (req, res) => {
+    try {
+        const response = await axios.get(API_URL + "/search");
+        const posts = response.data;
+        let randomIndex = null;
 
-app.post("/view-posts", (req, res) => {
-    const title = req.body.firstName;
-    const description = req.body.lastName;
-    const visibility = req.body.paymentMethod;
+        if (posts.length > 0) { 
+            randomIndex = Math.floor(Math.random() * posts.length); 
+        }
 
-    posts.push({ _id: uuidv4(), title, description, visibility });
-
-    res.redirect("/index");
-});
-
-app.get("/search", (req, res) => {
-    if (posts.length > 0) {
-        const randomIndex = Math.floor(Math.random() * posts.length);
-        res.render("search", { 
-            username: req.session.username, 
+        res.render("search.ejs", {
+            username: req.session.username,
+            randomIndex: randomIndex, 
+            post: null,
             posts,
-            randomIndex,
-            post: null
         });
-    } else {
-        res.render("search", { 
-            username: req.session.username, 
-            posts: [],
-            randomIndex: null,
-            post: null
-        });
+    } catch (error) {
+        res.status(500).json({ message: "Error loading search page" });
     }
 });
 
-app.post("/search", (req, res) => {
-    const searchTitle = req.body.searchPost; 
-    const foundPost = posts.find(post => post.title.toLowerCase() === searchTitle.toLowerCase());
-    const randomIndex = Math.floor(Math.random() * posts.length);
-
-    res.render("search", {
-        username: req.session.username,
-        post: foundPost || null,
-        randomIndex,
-        posts
-    });
+app.post("/search", async (req, res) => {
+    try {
+        const response = await axios.get(API_URL + "/search");
+        const posts = response.data;
+        const randomIndex = Math.floor(Math.random() * posts.length); 
+        const foundPost = posts.find(post => post.title.toLowerCase() === req.body.title.toLowerCase());
+        res.render("search.ejs", {
+            username: req.session.username,
+            post: foundPost || null,
+            randomIndex: randomIndex,
+            posts
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error searching for post" });
+    }
 });
 
-// delete a given post
-app.post('/posts/:id', (req, res) => {
-    const index = posts.findIndex(post => post._id === req.params.id); 
-    if (index === -1) return res.status(404).json({ message: "Post not found" });
-    
-    posts.splice(index, 1);
-    res.redirect("/profile");
-});
-
-// Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Backend server is running on http://localhost:${port}`);
 });
+  

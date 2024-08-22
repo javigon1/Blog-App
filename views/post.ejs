@@ -70,16 +70,16 @@
     <div class="container col-md-7 col-lg-8">
       <div class="box">
         <h4 class="mb-4" style="display: flex; justify-content: center; font-size: 2.5rem;">Create a Post</h4>
-        <form action="/view-posts" method="POST" class="my-3">
+        <form action="/post" method="POST" class="my-3">
           <div class="row g-3">
             <div class="col-12">
-              <label for="firstName" class="form-label">Title</label>
-              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="" required>
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="" value="" required>
             </div>
         
             <div class="col-12">
-              <label for="lastName" class="form-label">Description</label>
-              <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+              <label for="content" class="form-label">Content</label>
+              <input type="text" class="form-control" id="content" name="content" placeholder="" value="" required>
             </div>
         
             <div class="visibility">
@@ -87,12 +87,12 @@
         
               <div class="my-3">
                 <div class="form-check">
-                  <input id="credit" name="paymentMethod" type="radio" class="form-check-input" value="Public" checked required>
-                  <label class="form-check-label" for="credit">Public</label>
+                  <input id="public" name="visibility" type="radio" class="form-check-input" value="Public" checked required>
+                  <label class="form-check-label" for="public">Public</label>
                 </div>
                 <div class="form-check">
-                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" value="Private" required>
-                  <label class="form-check-label" for="debit">Private</label>
+                  <input id="private" name="visibility" type="radio" class="form-check-input" value="Private" required>
+                  <label class="form-check-label" for="private">Private</label>
                 </div>
               </div>
             </div>

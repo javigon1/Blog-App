@@ -20,7 +20,7 @@
                 <% posts.forEach(function(post) { %>
                     <div class="post">
                         <h4><%= post.title %></h4>
-                        <p><%= post.description %></p>
+                        <p><%= post.content %></p>
                         <form action="/posts/<%= post._id %>" method="POST" style="display: inline;">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>

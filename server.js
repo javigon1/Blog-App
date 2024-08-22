@@ -133,7 +133,7 @@ app.post("/search", async (req, res) => {
 //     }
 // });
 
-app.post('/profile/delete/:id', async (req, res) => {
+app.post('/profile/:id', async (req, res) => {
     console.log('Request received for deleting post:', req.params.id);
     console.log('Request body:', req.body);
     if (req.body._method === 'DELETE') {

@@ -73,3 +73,5 @@ app.listen(port, () => {
     console.log(`API is running at http://localhost:${port}`);
 });
   
+
+// el problñem es que el ejemplo tiene un get request para cada post/:id y yo no, estoy intentando hacerlo sdirecto desde profile 

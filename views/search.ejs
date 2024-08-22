@@ -10,24 +10,6 @@
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="/styles/animations.css">
     <style>
-        .search-results {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .search-results.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .found-post {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
@@ -45,7 +27,7 @@
           </a>
         </header>
     
-        <div class="p-5 bg-body-tertiary rounded-3 w-100 mb-4">
+        <div class="p-5 bg-body-tertiary rounded-3 w-100 mb-2">
           <div class="container-fluid py-5 center-flex">
             <h1 class="display-5 fw-bold mb-3">Search Post by Title</h1>
             <form id="searchForm" action="/search" method="POST">
@@ -54,18 +36,20 @@
           </div>
         </div>
 
-        <div id="searchResults" class="search-results">
-          <% if (post) { %> 
-            <div class="found-post">
-              <h4><%= post.title %></h4>
-              <p><%= post.description %></p>
-            </div>
-          <% } else { %>
-            <p>No post found.</p>
-          <% } %>
+        <div class="found">
+          <div id="searchResults" class="search-results <%= post ? 'show' : '' %> w-60">
+            <% if (post) { %> 
+              <div class="found-post">
+                <h3><%= post.title %></h3>
+                <p class="text-bg-dark"><%= post.content %></p>
+              </div>
+            <% } else { %>
+              <p>No post found.</p>
+            <% } %>
+          </div>
         </div>
     
-        <div class="row align-items-md-stretch w-100">
+        <div class="row align-items-md-stretch w-100 mt-2">
           <div class="col-md-6 mb-4">
             <div class="h-100 p-5 text-bg-dark rounded-3 search-title">
               <h2 class="display-5 fw-bold">Random Post</h1>
@@ -90,13 +74,5 @@
       <footer class="pt-3 mt-4 text-body-secondary border-top mx-5 my-5">
         © 2024
       </footer>
-      <!-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchResults = document.getElementById('searchResults');
-            if (searchResults.children.length > 0) {
-                searchResults.classList.add('show');
-            }
-        });
-    </script> -->
 </body>
 </html>

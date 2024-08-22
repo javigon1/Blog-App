@@ -4,8 +4,37 @@
 }
 
 .btn-grey:hover {
-    color: #000; /* Ensure text color remains black */
-    background-color: #a9a9a9; /* Change to a different background color on hover */
-    border-color: #a9a9a9; /* Match border color to background color on hover */
+    color: #000; 
+    background-color: #a9a9a9; 
+    border-color: #a9a9a9; 
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.found {
+    width: 70%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.found-post {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    max-width: 800px;
+    text-align: center;
+}
+
+.search-results {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+}
+.search-results.show {
+    display: block;
+    opacity: 1;
 }

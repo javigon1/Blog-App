@@ -92,44 +92,8 @@
     align-items: center;
 }
 
-.found {
-    width: 100%;
-    background-color: rgb(220, 218, 218);
-    padding: 4rem;
-}
-
-.found-post {
-    width: 60%; 
-    text-align: center;
-}
-
 .home-btn {
     position: fixed;
     top: 2rem; 
     left: 2.5rem;
 }
-
-.search {
-    transition: margin-top 0.3s ease;
-}
-
-.hide {
-    display: none;
-}
-
-/* Animation for sliding down */
-@keyframes slideDown {
-    from {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-.search.show {
-    display: block;
-    animation: slideDown 0.5s ease-in-out;
-  }

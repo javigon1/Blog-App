@@ -47,35 +47,27 @@ app.get("/search", (req, res) => {
     res.json(posts);
 });
 
-
-// // GET a specific post by title
-// app.get("/search/:title", (req, res) => {
-//     const foundPost = posts.find((post) => post.title === req.params.title);
-//     if (!foundPost) return res.status(404).json({ message: "Post not found" });
-//     res.json(foundPost);
+// // Route to delete a post
+// app.delete('/profile/:id', (req, res) => {
+//     const index = posts.findIndex(p => p._id === req.params.id);
+//     if (index !== -1) {
+//         posts.splice(index, 1);
+//         res.json({ message: 'Post deleted' });
+//     } else {
+//         res.status(404).json({ message: 'Post not found' });
+//     }
 // });
 
-
-// // PATCH a post when you just want to update one parameter
-// app.patch("/posts/:id", (req, res) => {
-//     const post = posts.find((p) => p.id === parseInt(req.params.id));
-//     if (!post) return res.status(404).json({ message: "Post not found" });
-  
-//     if (req.body.title) post.title = req.body.title;
-//     if (req.body.content) post.content = req.body.content;
-  
-//     res.json(post);
-// });
-
-// // DELETE a specific post by providing the post id
-// app.delete("/posts/:id", (req, res) => {
-//     const index = posts.findIndex((p) => p.id === parseInt(req.params.id));
-//     if (index === -1) return res.status(404).json({ message: "Post not found" });
-  
-//     posts.splice(index, 1);
-//     res.json({ message: "Post deleted" });
-// });
-  
+app.delete('/profile/:id', (req, res) => {
+    console.log('Delete request for ID:', req.params.id);
+    const index = posts.findIndex(p => p._id === req.params.id);
+    if (index !== -1) {
+        posts.splice(index, 1);
+        res.json({ message: 'Post deleted' });
+    } else {
+        res.status(404).json({ message: 'Post not found' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`API is running at http://localhost:${port}`);

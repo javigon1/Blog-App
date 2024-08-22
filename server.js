@@ -123,6 +123,33 @@ app.post("/search", async (req, res) => {
     }
 });
 
+
+// app.post('/profile/delete/:id', async (req, res) => {
+//     try {
+//       await axios.delete(`${API_URL}/profile/${req.params.id}`);
+//       res.redirect('/profile'); // Redirect to profile after deletion
+//     } catch (error) {
+//       res.status(500).json({ message: 'Error deleting post' });
+//     }
+// });
+
+app.post('/profile/delete/:id', async (req, res) => {
+    console.log('Request received for deleting post:', req.params.id);
+    console.log('Request body:', req.body);
+    if (req.body._method === 'DELETE') {
+        try {
+            await axios.delete(`${API_URL}/profile/${req.params.id}`);
+            res.redirect('/profile');
+        } catch (error) {
+            console.error('Error deleting post:', error);
+            res.status(500).json({ message: 'Error deleting post' });
+        }
+    } else {
+        res.status(405).json({ message: 'Method Not Allowed' });
+    }
+});
+  
+
 app.listen(port, () => {
     console.log(`Backend server is running on http://localhost:${port}`);
 });
